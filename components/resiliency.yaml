@@ -1,0 +1,18 @@
+apiVersion: dapr.io/v1alpha1
+kind: Resiliency
+metadata:
+  name: myresiliency
+
+spec:
+  policies:
+    retries:
+      retryThrice:
+        policy: constant
+        maxInterval: 5s
+        maxRetries: 3
+
+  targets:
+    components:
+      orderpubsub:
+        inbound:
+          retry: retryThrice

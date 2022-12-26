@@ -1,0 +1,21 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: orderpubsub
+spec:
+  type: pubsub.kafka
+  version: v1
+  metadata:
+  - name: brokers # Required. Kafka broker connection setting
+    value: "localhost:9092"
+  - name: consumerGroup # Optional. Used for input bindings.
+    value: "group1"
+  - name: clientID # Optional. Used as client tracing ID by Kafka brokers.
+    value: "my-dapr-app-id"
+  - name: authType # Required.
+    value: "none"
+  ## Uncomment the following to disable inbuilt retries
+  ## See docs https://docs.dapr.io/reference/components-reference/supported-pubsub/setup-apache-kafka/#spec-metadata-fields
+  ## Make sure that resiliency is enabled when disabling the retries, otherwise there will be no retries.
+  - name: consumeRetryEnabled
+    value: false
